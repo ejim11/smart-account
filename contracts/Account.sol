@@ -5,8 +5,6 @@ import "@account-abstraction/contracts/core/EntryPoint.sol";
 import "@account-abstraction/contracts/interfaces/IAccount.sol";
 
 contract Account is IAccount{
-
-
 uint public count;
 address public owner;
 
@@ -14,7 +12,7 @@ constructor (address _owner) {
     owner = _owner;
 }
 
-      function validateUserOp(
+    function validateUserOp(
         UserOperation calldata ,
         bytes32 ,
         uint256 
