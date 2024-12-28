@@ -11,13 +11,13 @@ async function main() {
   // console.log(code);
 
   const smartAcc = await hre.ethers.getContractAt('Account', ACC_ADDR);
-  const ep = await hre.ethers.getContractAt('EntryPoint', EP_ADDR);
+  // const ep = await hre.ethers.getContractAt('EntryPoint', EP_ADDR);
   const count = await smartAcc.count();
   console.log(count);
 
-  console.log('acc balance: ', await hre.ethers.provider.getBalance(ACC_ADDR));
-  console.log('acc Ep balance: ', await ep.balanceOf(ACC_ADDR));
-  console.log('acc Ep balance: ', await ep.balanceOf(PM_ADDR));
+  // console.log('acc balance: ', await hre.ethers.provider.getBalance(ACC_ADDR));
+  // console.log('acc Ep balance: ', await ep.balanceOf(ACC_ADDR));
+  // console.log('acc Ep balance: ', await ep.balanceOf(PM_ADDR));
 }
 
 main().catch((error) => {

@@ -16,7 +16,7 @@ function encodeNum(value) {
 }
 
 async function main() {
-  const [signer0] = await hre.ethers.getSigners();
+  const [signer0, signer1] = await hre.ethers.getSigners();
   const address0 = await signer0.getAddress();
 
   const ep = await hre.ethers.getContractAt('EntryPoint', EP_ADDRESS);
@@ -57,21 +57,20 @@ async function main() {
     //   hre.ethers.hexlify(encodeNum(500_000)),
     //   32
     // ),
-    callGasLimit: 200_000,
+    callGasLimit: 400_000,
     maxFeePerGas: hre.ethers.parseUnits('10', 'gwei'),
     maxPriorityFeePerGas: hre.ethers.parseUnits('5', 'gwei'),
-    preVerificationGas: 500_000,
-    verificationGasLimit: 200_000,
+    preVerificationGas: 100_000,
+    verificationGasLimit: 500_000,
     // gasFees: hre.ethers.zeroPadBytes(hre.ethers.hexlify(encodeNum(10_000)), 32),
     paymasterAndData: PM_ADDRESS,
     signature: '0x',
   };
 
-  console.log(userOp);
+  const userOpHash = await ep.getUserOpHash(userOp);
+  userOp.signature = signer0.signMessage(hre.ethers.getBytes(userOpHash));
 
-  const tx = await ep.handleOps([userOp], address0, {
-    gasLimit: BigInt(30000000),
-  });
+  const tx = await ep.handleOps([userOp], address0);
   console.log('transaction');
   const receipt = await tx.wait();
   console.log(receipt);
